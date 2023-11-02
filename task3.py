@@ -1,26 +1,25 @@
 # TODO Напишите функцию count_letters
 def count_letters(text):
     counted_letters = {}
+    
     for letter_in_text in text.lower():  # пробегаемся по символам текста приведя все к нижнему регистру
         if letter_in_text.isalpha():  # проверяем их на то,что они являются буквой
-            count = 0
-            for compare_letter in text.lower():  # повторно бежим по тексту
-                if compare_letter == letter_in_text:  # сравниваем повторно полученные буквы с изначальной
-                    count += 1
-                    counted_letters[letter_in_text] = count  # заполняем словарь буквами и их количеством
+            if letter_in_text in counted_letters:
+                counted_letters[letter_in_text] += 1
+            else:
+                counted_letters[letter_in_text] = 1
+    
     return counted_letters
 
 
 # TODO Напишите функцию calculate_frequency
 def calculate_frequency(counted_letters):
     letter_frequency = {}
-    sum_of_letters = 0
-    for letter_sum in counted_letters:  # ищем сумму букв в тексте, суммируя значения полученного словаря
-        sum_of_letters += counted_letters[letter_sum]
+    sum_of_letters = sum(counted_letters.values())
 
-    for letter_in_dict in counted_letters:  # высчитываем частоту каждой буквы
-        for _ in range(1, len(counted_letters)):
-            letter_frequency[letter_in_dict] = counted_letters[letter_in_dict] / sum_of_letters
+    for letter_in_dict, count in counted_letters.items():  # высчитываем частоту каждой буквы
+        letter_frequency[letter_in_dict] = count / sum_of_letters
+
     return letter_frequency
 
 # создаем тестовый текст для проверки
